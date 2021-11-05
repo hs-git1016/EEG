@@ -52,6 +52,28 @@ def model_single():
 
     model.compile(optimizer='adam', loss=categorical_crossentropy,metrics=['accuracy'])
     return model
+# _________________________________________________________________
+# Layer (type)                 Output Shape              Param #   
+# conv1d (Conv1D)              (None, 30, 128)           1024
+# _________________________________________________________________
+# max_pooling1d (MaxPooling1D) (None, 14, 128)           0
+# _________________________________________________________________
+# batch_normalization (BatchNo (None, 14, 128)           512
+# _________________________________________________________________
+# conv1d_1 (Conv1D)            (None, 10, 192)           123072
+# _________________________________________________________________
+# conv1d_2 (Conv1D)            (None, 6, 256)            246016
+# _________________________________________________________________
+# max_pooling1d_1 (MaxPooling1 (None, 2, 256)            0
+# _________________________________________________________________
+# flatten (Flatten)            (None, 512)               0
+# _________________________________________________________________
+# dense (Dense)                (None, 128)               65664
+# _________________________________________________________________
+# dropout (Dropout)            (None, 128)               0
+# _________________________________________________________________
+# dense_1 (Dense)              (None, 5)                 645
+
 
 
 PATH_TRAIN_FILE = "C:/Users/DELL/Desktop/EEG/children"
@@ -105,7 +127,7 @@ print('test:',x_test.shape,y_test.shape)
 
 model_fpz = model_single()
 model_fpz.fit(x=x_train,y=y_train,epochs=20,verbose=1)#,callbacks=[EarlyStopping(patience=3,restore_best_weights=True)])
-save_path = os.getcwd() +'/example_2/model/test_model.h5'
+save_path = os.getcwd() +'/model/test_model.h5'
 model_fpz.save(save_path)
 pred_fpz = model_fpz.predict(x_test,verbose=1)
 label_fpz = np.argmax(pred_fpz,axis=-1)
