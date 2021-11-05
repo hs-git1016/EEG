@@ -76,7 +76,7 @@ label = to_categorical(label)
 print(label.shape)
 
 
-model = load_model( os.getcwd() + '/example_2/model/test_model.h5')
+model = load_model( os.getcwd() + '/model/test_model.h5')
 pred_fpz = model.predict(fpz)
 
 label_fpz = np.argmax(pred_fpz,axis=-1)
