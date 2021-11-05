@@ -1,14 +1,7 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sun Jan 12 11:13:47 2020
-
-@author: Aadarsh Srivastava
-"""
-
 from mne.io import read_raw_edf
 from mne import read_annotations
 import numpy as np
-
 import os
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
@@ -20,13 +13,9 @@ from tensorflow.keras.losses import categorical_crossentropy
 from sklearn.metrics import accuracy_score,classification_report,confusion_matrix
 from glob import glob
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "1"
-
-
 def data_reshape(fpz,label):
     fpz= np.reshape(fpz,(label.shape[0],samples,1))
     return fpz
-
 
 def model_single():
     model = Sequential()
@@ -79,14 +68,11 @@ def model_single():
 PATH_TRAIN_FILE = "C:/Users/DELL/Desktop/EEG/children"
 psg_files = glob(os.path.join(PATH_TRAIN_FILE,'*.npz'))
 
-
 def load_data(file):
     data = np.load(file)
     x_data = data['x']
     label_data = data['y']
     return x_data,label_data
-
-
 x_1,label_1 = load_data(psg_files[0])
 x_2,label_2 = load_data(psg_files[1])
 # x_3,label_3 = load_data(psg_files[2])
@@ -96,25 +82,17 @@ label = np.concatenate([label_1,label_2])
 
 
 print(x.shape)
-epochs = 30
 samples = 36
-class_dict={0:"W",1:"N1",2:"N2",3:"N3",4:"REM",5:"UNKNOWN"}
-ann2label={"Sleep stage W":0,"Sleep stage 1":1,"Sleep stage 2":2,"Sleep stage 3":3,"Sleep stage 4":3,"Sleep stage R":5}
-
-
-# x = norm(x)
-
 fpz = data_reshape(x,label)
-# pz = data_reshape(pz,label)
+
 print(fpz.shape)
 print(label.shape)
-
-print(label[1134])
+print(label[2])
 encoder = LabelEncoder()
 encoder.fit(label)
 label = encoder.transform(label)
 print(label.shape)
-print(label[1134])
+print(label[2])
 label = to_categorical(label)
 print(label.shape)
 
